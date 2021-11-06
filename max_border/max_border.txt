@@ -1,0 +1,38 @@
+open to right/left/top/bottom mean there is a dot next to the '#'.
+we will look for the lengh of the border for each case: open to bottom.top/left/right. 
+The top var will hold the val for the top border if we are at the top of the shape that would be the #s, if we are at the bottom of the shape
+then it top will hold the '.'s. so absically what is on the top of the row or the bottom of it. so bottom and top will hold the either # or .
+, depends on where we are in the shape. we will compare these two to find the largest border. 
+
+first case:
+So for the first case, we are at the top of the shape where i == 0, if and at any given cell there is "#", and we don't only have one row.
+we will increment the top var by one. if we move down a row in the same colmun [i+1][j] and we find a dot we will increment the bottom by 1.(because finding a . means we found a border) 
+now we will compare bottom max(will hold the max of . or #) with bottom, if bottom is bigger than bottom max we will assign the val of bottom to bottom max. 
+in the first case the bottom max will end up with the max number of dots. finally, we will compare the max btw the top and the bottom max, and we will add 
+whoever is bigger to the the border list. In the first case we dont need to use topMax bcz there is not a a line above, so we only 
+consider what is bellow. keep in mind that in the last comparaison we are comparing the max btw the bottommax that has the highest num of dots and top that has the number of #. 
+A border is denoted by either because if you have high number of dots than that is a a long border where the shape has it's border.
+the elif stat is for when we are done iterating within that row(so it should get executed everytime), we compare one more time the bottom to the bottom max and we append whatever is bigger 
+the bottommax or the top to the list that holds our biggest borders in each row.
+
+second case:
+for the second case, similarilly to the first case, but now we are at the bottom of the input/shape. so for the i=m(num of rows)-1, and for that cell containing '#', and there is not  only one row.
+we will inc the bottom var by 1, everytime we find a #. going up one row [i-1][j], we will inc the top var by 1 if we find a dot. else if the top is>then the top max we will assign
+the value of topmax to top. at any given point, topmax/topbottom should have the highest value. else if we are at the and of the row, in the last column.
+we will compare the top to the topmax and assign the highest value to top max. and append the the highest bottom or the topmax to borderlist.
+
+
+thirst case:
+so now we are in betwen rows. 
+So if we are not at the top row or the bottom row and the cell has #, and there is  not only one row, if there is a dot above add one ot top, or compare btw the topmax and top 
+to make sure max has the highest val, if there is a tdot to the bottom ad 1 to bottom, or compare to make sure bottom max has highest val.
+else: if we are not at the top row or the bottom row and we are at the last column, so after we iterated through the row, compare both 
+bottom to bottom max and to topmax and assign highest val to max variable. then append the highest to the border list, eithee topmax or topbottom. 
+
+
+here we always first look for the # and then we check if there is  a . below or above or either, if there is it is a border. we ahve var to keep track of each time 
+we find a dot above or bellow a #, the var with highest number of dots means it is the bigger border. 
+the fist if block in each case get executed when we find a # black cell, the elifblock get executed once we are down with that row, then we will compare the var and append the highest tot he borderlist.
+
+
+finally we will print the max val in border list which is going to be the largest border. 

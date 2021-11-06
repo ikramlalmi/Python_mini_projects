@@ -1,0 +1,25 @@
+so for hangmen, we need to choose a random english word. so get the list
+and I know I wanna be able to choose randomly from this list. so i need to import random.
+we also wanna be able to use the words list that i just made. so we need to import it to be able to use it. so from words.py import the variable words 
+so first step is the computer has to figure out a word for us to guess. now we have to select a word from it.
+Notice that  some of the words have spaces and dashes in the middle of the world, which we can'r really guess in python. 
+we have to keep choosing a word until we get a valid word that we can guess in hangmen. 
+define a function to get a valid word and pass the words lis to it and choose one from that list.
+make a while a loop that will keep iterating as long as there is a dash or space in the word.
+so when it stops iterating we will get a word that does not have a space or dash in it, then return the word in upper case.
+
+We need to keep track of which letter in the word we guessed and which letter we have correctly guessed. We also need to keep track of what is a valid letter and what is not. 
+set up the variable word_letters, a variable that saves all the letters in a word as a set, to keep track of all the letters in the word that need to be guessed.
+We will also have alphabet, which is will contain the predetermined list of uppercase character in the english dictionary.
+We will have a another variable used_letters which will have letters that the user has already guessed. 
+Now we need to get user input, all in upper case, and store it in a var user_letter. 
+Now if this is a valid character in the alphabet that has not been used yet {if user_letter is alphabet-used_letters}. then we will add this to my used_letters set. if the user user_letter is in the word_letters, we will remove it from word_letters, so every-time i guess correctly, it will decrease in size.
+if the user letter is in used letter, that means that they have already used it and it is an invalid guess. Otherwise, they have typed it a invalid character. 
+
+We also want the user to keep guessing until they get the entire word, so we will use a while loop. 
+here we will use a while loop to keep iterating throught the code, until the user guesses the word. 
+Since everytime we are removing a letter from the word_letters, so it will keep decreasing is size as the user keep guessing right, so the condition, for the while loop would be while the len(word_letters)>0.
+We also need to tell the user what letters that have already used before. 
+Using the " ",join(used_letters), this will  turn the list into a string seperated by the string before the .join()
+we also need to tell the user what the current word is with dashes for the charachter they have not guessed yet. so we will create a list for where every letter that they have guessed in shown. 
+We will also take the list and joint it with space. 

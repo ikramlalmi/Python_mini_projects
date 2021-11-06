@@ -1,0 +1,76 @@
+creating a command line version of Tic Tac Toe, whihc various types of players, either human can play agaisnt the computer or the
+the computer can play against each other, or the computer can play against the computer.
+we will first split up the player and the game into two seperate classes, so that when we actually play, we can tell the game this is x player 
+and this is o player. 
+we will prob need math and random
+we will have a base player class, we will intialize wiht the ltter that the player is going to represent. it iwill be either X or O.
+
+    {self represents the instance of the class. By using the “self” keyword we can access the attributes and methods of the class in python. It binds the attributes with the given arguments.
+    the first parameter of methods is the instance the method is called on.
+    Self is always pointing to Current Object.}
+we want all players to be able to get their next move given a game. we will pass beacause this is our base player class, and on top of it we will buid a random computer player.
+and we will build a human player. here we will use inheretance in order to create random computer player and a human computer player that will build on top of this base player object
+    
+    {In Python, object is the base class from which all other classes are derived. In the above example, we have done this using super().}
+
+In the intialization we have to initialize the super class, using super(), it will class on the base class player.
+in the human player super class , the super class is till player, so we pass it as an arg. 
+now let's define the game in another file. to see exactely what we are dealing with when we pas in the game
+define class tic_tac_toe, we will need a board in this class. because our tictoctoe is a 3*3 board. notice that the bord was not passed in the init method, cs we need to create.
+self.board = [], so will a list of length 9 that will represent the board. we will assign an index to this length 9 list to each of the spaces.
+    {_ By convention _ means to other developers that the variable is unused.}
+we will aslo have a var current winner that will keep track of weather or not there is a winner in the game, and who is it.
+No we will define a method to print the board. we will wanna see what's on the board, we will split this up into the rows, so for each row, this will index into 
+length 9 list  for i in range(3), 
+
+the i*3:(i+1)*3: this is basically saying which group of three spaces are we choosing, is it the first, 2nd or 3rd one?
+indices -,1,2: that represent the first row, and indices 3,4,5 that represent the 2nd row.....
+for each row we will print, print the seperators, and "|".join(row), just saying join them in a string where the separator is the pipe line.
+the "|" and the last "|", that is for the board borders. 
+
+Now wiht print_board_nums it is a static method bcz it does not relate any specific board, so no need to pass a self. 
+it will print out which num corresponds to which spot. so the j in range (3), is the numof rows and we have 3 of them
+
+now lets dig a little deeper in the logic of the game. as of now we are representing the empty spaces with a space, and 
+we will need to know what are the available moves after you makw a move, we will return a list of indices.
+lets initialize moves as an empty list and say 
+enumerate will create a list wiht tuples and assign tuples that have the (index, value at that index), ['x','x','1']->(0,'x'), (1,'x'), in the for loop we going through the tuples and we are assigning first item to i and second item to x
+if the spot == " ", we know that this is an empty spce and we will apend the index of that spot to the moves list that had avaible moves, and at the end we will retun moves.
+the anotehr way to write this is a list comprehension. this is will condence the whole block of code in a line. 
+return[for i in i, spot in enumerate(self.board) if spot == " "]
+Now let's define the random computerplayer get move method, we will choose a random spot on the board that is empty, and call is square. 
+for the human player, we want it to be able to choose a spont based on some input that we pass in throught the terminal. We want the user
+to keep iterating until theyr ascheive a valid square. intialy the value of valid_square will be false and, and the val will be None.now ask user for the input, and we will tel the user 
+if it is their turn, (self.letter will be either X or o)
+we will incorporate  series of checks to make sure that this is a valid num that we can put in. 
+The checks: we will chekc that this is a correct value by trying to cast it to an integer, and if it is not, then 
+we say it is unvalid. If thats pot is invalid in the board we say it is also invalid. so try : val = int(square), and if 
+val not in game.avaible_moves(), we will raise a value error. so either one of these two thinsg go wrong, then we know it is not valid.
+if we pass both of these consitions, we can say valid square==True. now we will catch the value error,a dn say print ("")
+this will repeat the loop, until we get a valid square. at the very end we will retun the val once we get a valid square.
+now it will be the humna player next move. 
+Let add a function a called play outside if the class, wheer we will mass a game, and x)player and an o_player,
+and a variable print_game, that will just be set to true or false, so that it will print all the steps, but later when the computer is playing against it self 
+We don't need not see all of the steps, and have the computer print out every single game, we can toggle it to false. 
+If we will print the game, we will call the print print_board_nums fucntion to see the board, and which nums correspond to which spot. 
+starting letter will be x, could o too.
+while to game still has empty squares, or is still incomplete we will still ietrate.we dont have to worry abt the winner
+because the output if the loop will return the winner. 
+In order to check weather the game still has emppty square, we will create another fucntin wihtin the class.
+create the fucntion and return " " in self.board, which is a boolean, it will retun T or F 
+if there is empty squares.
+we also wanna know the number of empty square, so we will say, return length of available moves, it will retun the num of empty squares, or we could just say self.board.count(' '), it will count the 
+number of empty spaces. 
+while there are empty squares we wan to get the move from the approriate player, while the letter is equal to o, we will ask the o player to get the move,
+else it is the x player, and we will ask them to get the move.
+now let's define the fuction to make the move, now that we get the players to get their next move, what move are they gonna take?
+function make move, we need info abt what square the user wants their move to be at and what letter they will choose. if the move is valid we will
+we will assigna square to a letter, and return True, otherwise we will return False. so self.board[square], is empty we will assign the letter to the given square and 
+we return True, otherwise return false. now add that the play function.  
+if game_make_move is valid, and print_game is true , we wan tot print letter makes move to square{}
+now we wan to see a new represantation of the board where this spot now has been claimed: game.print_board() 
+
+
+
+
+

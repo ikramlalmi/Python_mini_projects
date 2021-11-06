@@ -1,0 +1,9 @@
+we will definetely be using random functions. we will also need some user input.
+we will also make the computer choose because we are playing against it. we will use random.choice and give it a list to choose from.
+once we know the computer choice and the user choice, we can come up with some rules to determine who wins.  
+If the user and the computer have both the same choise, it is  tie.
+The rules of the game are: r>s, s>p, p>r.
+Define a helper function, is_win, that will return true if the user wins. it will be player vs opponent. and add the rules for when the user wins.
+now call the function in the play function, passing the user input and the computeer choice as arg. so then ad the return, you lost is the is_win function returns false, you lost.
+
+

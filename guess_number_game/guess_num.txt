@@ -1,0 +1,11 @@
+We have two guessing games.
+First one is a guess the number game, and the second one is a computer guessing game, where we have 
+the cumputer guess a number and we give some type of feedback to help the computer gess correctely. 
+
+Random notes:
+Outside of the for loop, the var computer_guess is the last thing it guessed. 
+Random.randint will give you an error if low and high are the same number. We can either put the statement {low!=high} in the while loop condition, because if low=high, you have narrowed it down
+but if we do that, we will break from the while loop right away, wihtout giving the opportunity to the user to give us feedback. What we can do instead is have a if statement inside the while loop, so {if low!= high}, our guess is a random num between low and high, else, if low=high, our guess is equal to one of them, either low  or high.
+The following line will ask the user to verify the guess, when they input c for correct, we will go through the loop on more time and exit
+and print the yay message. 
+The boundaries which are the low and high of our guessing range, have to be adjusted by either decreasing or increasing the guess that the computer came up with.
