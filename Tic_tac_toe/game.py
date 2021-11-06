@@ -45,6 +45,7 @@ def play(game, x_player, o_player, print_game = True):
             # ask the x player the make a move.
             square = x_player.get_move(game)
         
+        
         # make a move
 
     
