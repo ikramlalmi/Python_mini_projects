@@ -38,18 +38,21 @@ enumerate will create a list wiht tuples and assign tuples that have the (index,
 if the spot == " ", we know that this is an empty spce and we will apend the index of that spot to the moves list that had avaible moves, and at the end we will retun moves.
 the anotehr way to write this is a list comprehension. this is will condence the whole block of code in a line. 
 return[for i in i, spot in enumerate(self.board) if spot == " "]
+
+
+
 Now let's define the random computerplayer get move method, we will choose a random spot on the board that is empty, and call is square. 
-for the human player, we want it to be able to choose a spont based on some input that we pass in throught the terminal. We want the user
-to keep iterating until theyr ascheive a valid square. intialy the value of valid_square will be false and, and the val will be None.now ask user for the input, and we will tel the user 
+for the human player, we want it to be able to choose a spot based on some input that we pass in throught the terminal. We want the user
+to keep iterating until they ascheive a valid square. intialy the value of valid_square will be false and, and the val will be None. now ask user for the input, and we will tell the user 
 if it is their turn, (self.letter will be either X or o)
 we will incorporate  series of checks to make sure that this is a valid num that we can put in. 
-The checks: we will chekc that this is a correct value by trying to cast it to an integer, and if it is not, then 
+The checks: we will check that this is a correct value by trying to cast it to an integer, and if it is not, then 
 we say it is unvalid. If thats pot is invalid in the board we say it is also invalid. so try : val = int(square), and if 
 val not in game.avaible_moves(), we will raise a value error. so either one of these two thinsg go wrong, then we know it is not valid.
 if we pass both of these consitions, we can say valid square==True. now we will catch the value error,a dn say print ("")
 this will repeat the loop, until we get a valid square. at the very end we will retun the val once we get a valid square.
-now it will be the humna player next move. 
-Let add a function a called play outside if the class, wheer we will mass a game, and x)player and an o_player,
+now it will be the human player next move. 
+Let add a function a called play outside if the class, where we will mass a game, and x)player and an o_player,
 and a variable print_game, that will just be set to true or false, so that it will print all the steps, but later when the computer is playing against it self 
 We don't need not see all of the steps, and have the computer print out every single game, we can toggle it to false. 
 If we will print the game, we will call the print print_board_nums fucntion to see the board, and which nums correspond to which spot. 
@@ -59,18 +62,38 @@ because the output if the loop will return the winner.
 In order to check weather the game still has emppty square, we will create another fucntin wihtin the class.
 create the fucntion and return " " in self.board, which is a boolean, it will retun T or F 
 if there is empty squares.
-we also wanna know the number of empty square, so we will say, return length of available moves, it will retun the num of empty squares, or we could just say self.board.count(' '), it will count the 
+We also wanna know the number of empty square, so we will say, return length of available moves, it will retun the num of empty squares, or we could just say self.board.count(' '), it will count the 
 number of empty spaces. 
-while there are empty squares we wan to get the move from the approriate player, while the letter is equal to o, we will ask the o player to get the move,
+While there are empty squares we want to get the move from the approriate player, while the letter is equal to o, we will ask the o player to get the move,
 else it is the x player, and we will ask them to get the move.
-now let's define the fuction to make the move, now that we get the players to get their next move, what move are they gonna take?
+
+Now let's define the function to make the move, now that we get the players to get their next move, what move are they gonna take?
 function make move, we need info abt what square the user wants their move to be at and what letter they will choose. if the move is valid we will
-we will assigna square to a letter, and return True, otherwise we will return False. so self.board[square], is empty we will assign the letter to the given square and 
-we return True, otherwise return false. now add that the play function.  
-if game_make_move is valid, and print_game is true , we wan tot print letter makes move to square{}
-now we wan to see a new represantation of the board where this spot now has been claimed: game.print_board() 
+we will assign a square to a letter, and return True, otherwise we will return False. so self.board[square], is empty we will assign the letter to the given square and 
+we return True, otherwise return false. Now add that the play function.  
+if game.make_move is valid, and print_game is true , we want to print in the terminal that letter(player) makes move to square{}
+now we want to see a new represantation of the board where this spot now has been claimed: game.print_board() 
+print('') is just an empty line that we are printing. 
 
+after we made our move, we need to alternate letters, here we will assign letter= O if the old letter was x otherwise assign it to x.
+two diff ways to do it. 
+but wait technically every time, you make a move, you could win! go back to the the function make_move, after we place th letter in the sqaure, we can toggle current winner to the winner if there is one. 
+so lets' make another fucntion that checks for the winner after we make a move, and we will apss in out last move in the make move fucntion, bcz that is going to be winning move. if that is the winning move, we can assign current winner= to that players letter. 
 
+now in the play fucntin, after we make a move, we will chech for the current winner before we switch letters. so if the current winner is not set anymore, a leteer has won, and retur the letter that give us the win, and we can end the game.
+so if game.current_winner: we can return the winner of the game. so in this game we will return the winner if there is one, or none= it is tie. 
+let's add in the none for the tie at the bottom, so if print game, after this while loop is over, we can print it is a tie.
+so now let's create the fucntion that defines the winner, we will input the square and letter.
+We know that in tic_tac_toe, of there is a 3 on a row anywhere, but we have to chekc all of the possibilites. 
+either in the row, column or diagonal. first check the row, so the index of the row, si going to be what ever square you give it and devide it by 3 and round it down. {ex: 4//3=1index} so the // is rounding down
 
+row var is going to be a list of items in the row we have selected. so self.board at index row. givenn he row index get the row. if all in the list is true, this comes ou to be true. for every spot in the list row we will check if that spot ==letter (all ==o), then return true, we have 3 in a row. 
+now let's check the column next, so for the column index, square devided by 3 and take left over suing the mudulo operator % {square 4%3=1 }. then we will have hte list column, that will have the entire col: so we take the col index and for every single row=i, if we add the col index you will get the entire col values. 
+then we will use the if all checker, if evrything in the column, is equal to the letter we will return T, finnaly we will check the diagonals.
+so the only way to win a diagonal is to place a move along the diagonal at the sqaure num{0,2, 4, 6, 8}, so chekc if the square that we moved to is an even number, so if the square is dvisible by 2 using the mudulo operator, then we will create a list diagonal1, that will have the squre wiht index 0,4,8.
+for the diagnal, we will put the squares wiht index 2,4,6.  we will once again use the if checker, so if every spot in diagonal 1 or 2 is equal the same letter, return true.
+if all these checks fails, we dont have a winner so we can return false. 
 
-
+if name == main, we will make the x player equals to the human player, assign it the letter x. we also have to import human player and computer player, other wise game,py has no idea what is in th eplayer.py. do for our x player we will create a human player and initilize it wiht the letter x, same wiht o player
+and for our game we will call it t, and it will be an instance of tic_tac_toe, then we will call the fucntion.
+and pass in the game: t , and the o_player and the x player, and set the game =True. to add in tiny pause after each player plays, we can call in time.sleep(0.8), and that is 0.8 seconds. and import time. 
