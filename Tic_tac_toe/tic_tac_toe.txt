@@ -40,7 +40,6 @@ the anotehr way to write this is a list comprehension. this is will condence the
 return[for i in i, spot in enumerate(self.board) if spot == " "]
 
 
-
 Now let's define the random computerplayer get move method, we will choose a random spot on the board that is empty, and call is square. 
 for the human player, we want it to be able to choose a spot based on some input that we pass in throught the terminal. We want the user
 to keep iterating until they ascheive a valid square. intialy the value of valid_square will be false and, and the val will be None. now ask user for the input, and we will tell the user 
@@ -97,3 +96,55 @@ if all these checks fails, we dont have a winner so we can return false.
 if name == main, we will make the x player equals to the human player, assign it the letter x. we also have to import human player and computer player, other wise game,py has no idea what is in th eplayer.py. do for our x player we will create a human player and initilize it wiht the letter x, same wiht o player
 and for our game we will call it t, and it will be an instance of tic_tac_toe, then we will call the fucntion.
 and pass in the game: t , and the o_player and the x player, and set the game =True. to add in tiny pause after each player plays, we can call in time.sleep(0.8), and that is 0.8 seconds. and import time. 
+
+
+Now can we make it so that the computer never loses, using the minimax , which is a decision algorighmn, build off of a maximizer and minimizer concept.
+basically, you are trying to maximize your win while your opponent is trying to minimize their loss. In minimax, you will be trying to find the best move to make.
+you can figure this out by trying all the moves and seeing which one is optimal. using the utility function, you can measure how valuable the final result is. 
+look at screen shot: it is x turn, and the goal is to maximize x since we want to win. so you put down an x in every potential move, in the middle you would win.
+
+the utility func: since we want to win, we want out utility to be positive, you also want to win in as little steps as possible.
+how to get that number: utility: 1*3 = 3, Take the remaining squares in the board and you add one, so that even if you win you end up wiht a positve val, and not 0. 
+and then you multuply it by either +1 or -1 , depending on who the winner is. so if O wins: -1 * (2 sqaure left +1) = -3, moving from there, you want map out all of the remaining possible scenarios. until the board is filled or someone has won.
+if it is a draw, 0*1=0, if you dont have any empty sqaure (1*1).
+now that we have the utility values, we can propagate them back up to find the most optimal path to take. 
+at the bottom,we have a maximizer fucntion, because it is x turn(remember x is trying to max his win and o is trying to minimize his loss)
+there is no decision to be made because there is only one option, the middle one with U=1, in the row above, it is is o trun, and we assume they will be taking their most optimal path, 
+to minimize their loss/val, so on the left side -2 is less than 0, so o will chose -2, and on the right side 0<1, so x=0. on the row above that, it is x trun againa nd we want to max x, btw -2, 3,0: 3 is the max, we would choose the middle path, where x will win
+in the least number os teps possible.
+
+implementation:
+we will create a genius computer player, that will take Player as a super class again. we will intialize it the same way. 
+we also want to use get_move, and this is where all magic will happen, at the begining if all spaces are available we will say grab a random spot and go there. otherwise, we will get the sqaure based of
+minimax algo that we described. because of the recursive nature of the algo, we will define a function outside of the get_move fucntion. you will call it in get move, and you will need ot pass in the game and the letter of the player, so that we can win and not the other player, so
+minimax(game, self.letter). at the end we retrun the square that was picked by the algo.
+defining the algo, so we will pass in self, state, player, the reason we pass in state and not game, is beacsue at every single iteration of minimax, we pass in a represenation or a screens shot ot the game at that state. just a var name. the max_pplayer is going to be yoir self becaue y wanna max your score.
+the other _player, is what other the letter is not. first we wanna check if the prev move is a winner.
+when you have recursion, you always need a base case and this base case will be: at the very end of things where are we at?
+we wanna see was there a winner in any of the states we have pass in, in our gae we already have current_winner fucntion defined, so if the state.current_winner is equal the other player, we should return the current position and the score. 
+we need to keep track of both score and position for the algo to work. we will retunr a dictinary {position: none, "score" : 1* (num of empty sqaures+1)}. this is the same formula we talked abt earlier, we want to max the empty sqaures= so get to a win as soon as possible. is the other player is the max_player(so yourself:
+ you would have a positive U). otherwise, we will do the sam thing but *-1. 
+ if there are no winner and there is no empty squares: that menas no body won and our score will be neutral=0. so the position is none because we can not move anywhere. these are our base cases.
+
+ if the player is the max_player, we will intialize a var: best, it will be a dict that will save the best position to move and the best score. because the max_player is going to be yourself, you want to max that every single time, so you are comparing evry single score to the score and you are trying to increment it. so we wan to 
+ intialize the score to the lowest possible(-infinity) score so that one interation will beat thats score. else if the player is not that max_player, we still want the positon to be initialized to none, but the score will be +infinity, beacause we are tryign to monimize that. so we are tryign to decrease that.
+so we have to initialzie at the highest possible value. 
+
+so for evry single possible move in the avaible moves we will do few things: first step, you will make a move and try that spot.on step 2 we will recurse using minimax, to simulate a game afte rmaking that move. so what happens if we make that move.  step 3: is when we undo the move, so we can try the next one in future iteration. the step4: we need to update the dict if necessary, so if your score from that possible move 
+beats the current best score, then we want to replace that dict wiht whatever we get from that possible move. 
+step1: we wanna call state.make_move, we will pass in whatever possible move and the player that is going to be making that move.
+step2: the simulated score will be self.minimax, and pass in the new state to minimax after we made that move,and we will alternate players, so we pass the other_player.
+step3: we undo the move, by reseting the possible move in the board to an empty space. set the the current winer to none. 
+for the simulated score, at the end we return the position, so we have to set which position we just moved to. so our simulated score position= the possible_move.
+step4: if the palyer is the max player, if the simulated score is greater than the best score, we replace the best dict witht he sim_score dict. 
+otherwise, it means that you player is the min player, and if your sim-score<best score, you replace the best dict with the sim dic, bcz we succesfully gotten a low score. since we are trying the max max player nad minimize the othe player.
+so at the end after we have tried evrysingle step, the best dict will conatin our best next possible move,a nd the best score that can arise from it. so it will return a dict with positiona nd score.
+in order to use that in out get move for genuis computer player, we have to index for position. that will return the sqaure for the best move position, cz remeber minimax return a dic, so sqaure= best dict, but we only wan the position of the sqaure to be passed.
+
+
+we can set the computer player to play against the genuis computer player, we dont want to pring the whole gamw, so toggle print_game =False.
+
+we gonna make it play for bumch of times and we will keep track of num of o wins, and x wins, and ties. to initialize those var
+remember that play passes back who ever wins.  
+at the end the result will be what ver play spits out. so increment the var if the result=to one of them. and at the end we will print out who ever wins.
+
